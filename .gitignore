@@ -1,0 +1,37 @@
+# --- Base ---
+.DS_Store
+Thumbs.db
+*.log
+.env
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Angular (ems-frontend-main) ---
+ems-frontend-main/node_modules/
+ems-frontend-main/dist/
+ems-frontend-main/.angular/
+ems-frontend-main/.vscode/
+ems-frontend-main/coverage/
+ems-frontend-main/npm-debug.log*
+ems-frontend-main/yarn-debug.log*
+ems-frontend-main/yarn-error.log*
+
+# --- Django (trans_ems) ---
+trans_ems/*.sqlite3
+trans_ems/staticfiles/
+trans_ems/media/
+trans_ems/.vscode/
+trans_ems/db.sqlite3
+trans_ems/local_settings.py
+trans_ems/.ipynb_checkpoints
+
+# --- Misc ---
+.idea/
+.project
+.vscode/
+*.swp
+*.bak

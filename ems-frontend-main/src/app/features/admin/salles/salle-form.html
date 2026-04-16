@@ -1,0 +1,68 @@
+<div class="modal-overlay" (click)="close.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">{{ salle ? 'Modifier la Salle' : 'Nouvelle Salle' }}</h2>
+      <button class="btn-close" (click)="close.emit()">&times;</button>
+    </div>
+
+    <form [formGroup]="salleForm" (ngSubmit)="submit()">
+      <div class="form-grid">
+        <!-- Logo Section -->
+        <div class="logo-upload-section">
+          <div class="logo-preview" (click)="fileInput.click()">
+            <img *ngIf="imagePreview" [src]="imagePreview" alt="Logo preview">
+            <div *ngIf="!imagePreview" class="logo-placeholder">
+              <span>+</span>
+              <p>Logo</p>
+            </div>
+            <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden>
+          </div>
+          <p class="upload-hint">Format: JPG, PNG (Max 2Mo)</p>
+        </div>
+
+        <!-- Info Section -->
+        <div class="fields-section">
+          <div class="form-group">
+            <label for="nom">Nom du Studio</label>
+            <input id="nom" type="text" formControlName="nom" placeholder="Ex: Pulse Lab Casablanca">
+            <div *ngIf="salleForm.get('nom')?.touched && salleForm.get('nom')?.invalid" class="error">
+              Le nom est requis (3 caractères min).
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="color1">Couleur Primaire</label>
+              <div class="color-picker-wrapper">
+                <input id="color1" type="color" formControlName="couleur_primaire">
+                <span class="color-hex">{{ salleForm.get('couleur_primaire')?.value }}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="plan">Plan SaaS</label>
+              <select id="plan" formControlName="pack_saas">
+                <option value="starter">Starter</option>
+                <option value="pro">Pro</option>
+                <option value="enterprise">Enterprise</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="actif">
+              Salle active (Personnel autorisé à se connecter)
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" (click)="close.emit()" [disabled]="isSubmitting">Annuler</button>
+        <button type="submit" class="btn-primary" [disabled]="salleForm.invalid || isSubmitting">
+          {{ isSubmitting ? 'Enregistrement...' : 'Enregistrer la Salle' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

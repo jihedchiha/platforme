@@ -1,0 +1,73 @@
+<div class="salles-container">
+  <div class="salles-header">
+    <div>
+      <h1 class="salles-title">Gestion des Salles</h1>
+      <p class="salles-subtitle">Gérez les studios et les franchises de la plateforme Pulse Lab.</p>
+    </div>
+    <button class="btn-create" (click)="openCreateForm()">
+      <span class="icon">+</span> Nouvelle Salle
+    </button>
+  </div>
+
+  <div class="salles-card">
+    <div *ngIf="loading()" class="loader-overlay">
+      <div class="loader"></div>
+    </div>
+
+    <table class="salles-table">
+      <thead>
+        <tr>
+          <th>Studio</th>
+          <th>Plan SaaS</th>
+          <th>Status</th>
+          <th>Créé le</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let salle of salles()">
+          <td>
+            <div class="salle-info">
+              <div class="salle-logo-box" [style.background]="salle.couleur || 'linear-gradient(135deg, #2563eb, #7c3aed)'">
+                <img *ngIf="salle.logo" [src]="salle.logo" [alt]="salle.nom">
+                <span *ngIf="!salle.logo">{{ salle.nom.charAt(0) }}</span>
+              </div>
+              <div>
+                <div class="salle-name">{{ salle.nom }}</div>
+                <div class="salle-id">ID: {{ salle.id.substring(0,8) }}...</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="badge badge-plan">{{ 'Pro' }}</span> <!-- Mocking plan for now -->
+          </td>
+          <td>
+            <span class="badge badge-status" [class.active]="true">Actif</span>
+          </td>
+          <td>{{ '12 Oct 2025' }}</td> <!-- Mocking date -->
+          <td class="text-right">
+            <button class="btn-icon" (click)="openEditForm(salle)" title="Modifier">
+              ✏️
+            </button>
+            <button class="btn-icon btn-danger" title="Désactiver">
+              🚫
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="salles().length === 0 && !loading()">
+          <td colspan="5" class="empty-state">
+            Aucune salle trouvée. Commencez par en créer une.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Form -->
+<app-salle-form 
+  *ngIf="showForm()" 
+  [salle]="selectedSalle()" 
+  (close)="closeForm()" 
+  (saved)="onFormSaved()">
+</app-salle-form>
