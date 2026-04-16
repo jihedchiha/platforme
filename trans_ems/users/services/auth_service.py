@@ -7,7 +7,7 @@ class AuthService:
     @staticmethod
     def login(username, password):
         try:
-            user = Utilisateur.objects.all_salles.get(username=username) # Utilisation de all_salles pour le login global
+            user = Utilisateur.objects.get(username=username) # Utilisation de .get() standard
         except Utilisateur.DoesNotExist:
             raise ValueError("Nom d'utilisateur incorrect")
 
